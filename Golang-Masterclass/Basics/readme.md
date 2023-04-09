@@ -1,5 +1,5 @@
 # Golang-Masterclass
-Golang Masterclass - Basic and Advanced Concepts
+Golang Masterclass - Basic Concepts
 
 ### prerequisites
 
