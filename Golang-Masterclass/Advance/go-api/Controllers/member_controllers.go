@@ -21,11 +21,16 @@ import (
 var memberCollection *mongo.Collection = configs.GetCollection(configs.DB, "members")
 var validate = validator.New()
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func CreateMember() http.HandlerFunc {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		var member models.Member
 		defer cancel()
+		enableCors(&rw)
 
 		//validate the request body
 		if err := json.NewDecoder(r.Body).Decode(&member); err != nil {
@@ -71,6 +76,7 @@ func GetMember() http.HandlerFunc {
 		var user models.Member
 
 		defer cancel()
+		enableCors(&rw)
 
 		objId, _ := primitive.ObjectIDFromHex(userId)
 
@@ -94,6 +100,7 @@ func GetAllMembers() http.HandlerFunc {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		var members []models.Member
 		defer cancel()
+		enableCors(&rw)
 
 		results, err := memberCollection.Find(ctx, bson.M{})
 
@@ -132,6 +139,7 @@ func UpdateMember() http.HandlerFunc {
 		var user models.Member
 
 		defer cancel()
+		enableCors(&rw)
 
 		objId, _ := primitive.ObjectIDFromHex(userId)
 
@@ -190,6 +198,7 @@ func DeleteMember() http.HandlerFunc {
 		params := mux.Vars(r)
 		userId := params["id"]
 		defer cancel()
+		enableCors(&rw)
 
 		objId, _ := primitive.ObjectIDFromHex(userId)
 
