@@ -646,7 +646,7 @@ update Member Routes `member_routes.go` file
 
 
 ```
-router.HandleFunc("/member/{id}", controllers.UpdateMember()).Methods("PUT")
+router.HandleFunc("/member/{id}", controllers.DeleteMember()).Methods("DELETE")
 
 ```
 
